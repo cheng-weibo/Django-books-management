@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <style>
+        #tb td, #tb th{text-align: center; vertical-align: inherit}
+        *{margin: 0; padding: 0}
+        .sidebar{
+            background-color: #f5f5f5;
+            height: 100%;
+            border-right: 1px solid #eee;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+        }
+        .nav-sidebar{
+            list-style: none;
+            margin-top: 50px;
+        }
+        .nav-sidebar li{
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 5px;
+        }
+        .active{background-color: pink;}
+    </style>
+    {% block style %}{% endblock %}
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <ul class="nav-sidebar" id="left-ul">
+                    <li><a href="/" class="menu">图书</a></li>
+                    <li><a href="/publisher/" class="menu">出版社</a></li>
+                    <li><a href="/author/" class="menu">作者</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-8 col-md-offset-2">
+                {% block content %}
+
+                {% endblock %}
+                <!--分页-->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if current_page.has_previous %}
+                        <li><a href="?page{{ current_page.previous_page_number  }}" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+                        {% else %}
+                        <li class="disabled"><a href="" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+                        {% endif %}
+
+                        {% for item in page_range %}
+                            {% if current_page_num == item %}
+                                <li class="active"><a href="?page={{ item }}">{{ item }}</a></li>
+                            {% else %}
+                                <li><a href="?page={{ item }}">{{ item }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if current_page.has_next %}
+                            <li><a href="?page={{ current_page.next_page_number  }}" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+                        {% else %}
+                            <li class="disabled"><a href="" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+
+
+
+        </div>
+    </div>
+
+</body>
+<script>
+    var oli = document.getElementById("left-ul").children;
+    var title = document.getElementsByTagName("title")[0];
+    for(var i=0;i<oli.length;i++){
+        if(oli[i].innerText === title.innerHTML){
+            oli[i].classList.add("active")
+        }
+    }
+</script>
+{% block js %}{% endblock %}
+</html>
+

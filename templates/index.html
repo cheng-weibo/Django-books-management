@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}图书{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<p><a href="/add_book/" class="btn btn-primary">添加图书</a></p>
+    <table id="tb" class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>书名</th>
+                <th>出版社</th>
+                <th>价格</th>
+                <th>出版日期</th>
+                <th>作者</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in current_page %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ book.title }}</td>
+                <td><a href="/publisher_book/{{ book.publisher.pk }}/">{{ book.publisher.name }}</a></td>
+                <td>{{ book.price }}</td>
+                <td>{{ book.publishDate|date:"Y-m-d" }}</td>
+                <td>
+                    {% for author in book.authors.all %}
+                        {% if forloop.last %}
+                            <a href="/author_book/{{ author.pk }}/">{{ author.name }}</a>
+                        {% else %}
+                            <a href="/author_book/{{ author.pk }}/">{{ author.name }}</a>,
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="/edit_book/{{ book.pk }}/" class="btn btn-warning">编辑</a>
+                    <a href="/delete_book/{{ book.pk }}/" class="btn btn-danger">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

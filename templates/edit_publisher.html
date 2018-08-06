@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑出版社</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <style>
+        span{color: red}
+        #publisher_obj{display: none}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                <p><a href="/publisher/" class="btn btn-primary">返回</a></p>
+
+                    <form action="" method="post" novalidate>
+                        {% csrf_token %}
+                        <p>
+                            {{ fm.name.label }}
+                            {{ fm.name }}
+                            <span>{{ fm.name.errors.0 }}</span>
+                        </p>
+                        <p>
+                            {{ fm.city.label }}
+                            {{ fm.city }}
+                            <span>{{ fm.city.errors.0 }}</span>
+                        </p>
+                        <p>
+                            {{ fm.email.label }}
+                            {{ fm.email }}
+                            <span>{{ fm.email.errors.0 }}</span>
+                        </p>
+                        <p><input type="submit"><span>{{ error_msg }}</span></p>
+                    </form>
+            </div>
+        </div>
+    </div>
+
+
+<p id="publisher_obj">{{ ret }}</p>
+</body>
+<script>
+    var publisher_obj = JSON.parse(JSON.parse(document.getElementById("publisher_obj").innerText))[0];
+    document.getElementById("id_name").value = publisher_obj.fields.name;
+    document.getElementById("id_city").value = publisher_obj.fields.city;
+    document.getElementById("id_email").value = publisher_obj.fields.email;
+</script>
+</html>

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ pub.name }}{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+
+<p><a href="{{ target }}" class="btn btn-primary">返回</a></p>
+    <table id="tb" class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>书名</th>
+                <th>出版社</th>
+                <th>价格</th>
+                <th>出版日期</th>
+                <th>作者</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in book_obj_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.publisher.name }}</td>
+                <td>{{ book.price }}</td>
+                <td>{{ book.publishDate|date:"Y-m-d" }}</td>
+                <td>
+                    {% for author in book.authors.all %}
+                        {% if forloop.last %}
+                            {{ author.name }}
+                        {% else %}
+                            {{ author.name }},
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="/edit_book/{{ book.pk }}/?to=publisher_book/{{ nid }}">编辑</a>
+                    <a href="/delete_book/{{ book.pk }}/">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

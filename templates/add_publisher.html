@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加出版社</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <style>
+        span{color: red}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                <p><a href="{{ target }}" class="btn btn-primary">返回</a></p>
+
+                    <form action="" method="post" novalidate>
+                        {% csrf_token %}
+                        <p>
+                            {{ fm.name.label }}
+                            {{ fm.name }}
+                            <span>{{ fm.name.errors.0 }}</span>
+                        </p>
+                        <p>
+                            {{ fm.city.label }}
+                            {{ fm.city }}
+                            <span>{{ fm.city.errors.0 }}</span>
+                        </p>
+                        <p>
+                            {{ fm.email.label }}
+                            {{ fm.email }}
+                            <span>{{ fm.email.errors.0 }}</span>
+                        </p>
+                        <p><input type="submit" class="btn btn-default"><span>{{ error_msg }}</span></p>
+
+                    </form>
+
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

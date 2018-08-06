@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}出版社{% endblock %}
+
+{% block content %}
+
+
+    <a href="/add_publisher/?to=publisher" class="btn btn-primary">添加出版社</a>
+     <table id="tb" class="table table-bordered table-hover table-striped">
+
+         <thead>
+            <tr>
+                 <th>编号</th>
+                 <th>出版社</th>
+                 <th>城市</th>
+                 <th>邮箱</th>
+                 <th>操作</th>
+            </tr>
+         </thead>
+         <tbody>
+              {% for foo in current_page %}
+              <tr>
+                   <td >{{ forloop.counter }}</td>
+                   <td><a href="/publisher_book/{{ foo.pk }}/?to=publisher">{{ foo.name }}</a></td>
+                   <td>{{ foo.city }}</td>
+                   <td>{{ foo.email }}</td>
+                   <td>
+                       <a href="/edit_publisher/{{ foo.pk }}/" class="btn btn-warning">编辑</a>
+                       <a href="/del_publisher/{{ foo.pk }}/" class="btn btn-danger">删除</a>
+                   </td>
+              </tr>
+              {% endfor %}
+         </tbody>
+     </table>
+
+{% endblock %}

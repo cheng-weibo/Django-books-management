@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑出版社</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <style>
+        span{color: red}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+            <p><a href="/author/" class="btn btn-primary">返回</a></p>
+
+            <form action="" method="post" novalidate>
+                {% csrf_token %}
+                <p>
+                    {{ fm.name.label }}
+                    {{ fm.name }}
+                    <span>{{ fm.name.errors.0 }}</span>
+                </p>
+                <p>
+                    {{ fm.age.label }}
+                    {{ fm.age }}
+                    <span>{{ fm.age.errors.0 }}</span>
+                </p>
+                <p><input type="submit"><span>{{ error_msg }}</span></p>
+            </form>
+            </div>
+        </div>
+    </div>
+
+        <p id="author_obj" style="display: none">{{ ret }}</p>
+</body>
+<script>
+    var author_obj = JSON.parse(JSON.parse(document.getElementById("author_obj").innerText))[0];
+    document.getElementById("id_name").value = author_obj.fields.name;
+    document.getElementById("id_age").value = author_obj.fields.age;
+</script>
+</html>

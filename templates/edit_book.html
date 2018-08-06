@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑书籍</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <style>
+        span{color: red}
+        #book_obj{display: none}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                <p><a href="{{ target }}" class="btn btn-primary">返回</a></p>
+
+                    <form action="" method="post" novalidate>
+                        {% csrf_token %}
+                        <p>
+                            {{ fm.title.label }}
+                            {{ fm.title }}
+                            <span>{{ fm.title.errors.0 }}</span>
+                        </p>
+                        <p>{{ fm.publisher.label }}
+                            {{ fm.publisher }}
+                            <a href="/add_publisher/?to=edit_book/{{ nid }}">添加</a>
+                        </p>
+                        <p>
+                            {{ fm.price.label }}
+                            {{ fm.price }}
+                            <span>{{ fm.price.errors.0 }}</span>
+                        </p>
+                        <p>
+                            {{ fm.publishDate.label }}
+                            {{ fm.publishDate }}
+                            {{ fm.publishDate.help_text }}
+                            <span>{{ fm.publishDate.errors.0 }}</span>
+                        </p>
+                        <p>
+                            {{ fm.authors.label }}
+                            {{ fm.authors }}
+                            <a href="/add_author/?to=edit_book/{{ nid }}">添加</a>
+                            <span>{{ fm.authors.errors.0 }}</span>
+                        </p>
+                        <p><input type="submit"><span>{{ error_msg }}</span></p>
+                    </form>
+            </div>
+        </div>
+    </div>
+
+<p id="book_obj">{{ ret }}</p>
+<script>
+    var book_obj = JSON.parse(JSON.parse(document.getElementById("book_obj").innerText))[0];
+    //书名
+    document.getElementById("id_title").value = book_obj.fields.title;
+    //出版社
+    var publisher_id = book_obj.fields.publisher;
+    var op = document.getElementById("id_publisher").children;
+    for(var i=0; i<op.length; i++){
+            if(op[i].value == publisher_id){
+                op[i].selected = true
+            }
+    }
+    //价格
+    document.getElementById("id_price").value = book_obj.fields.price;
+    //出版日期
+    document.getElementById("id_publishDate").value = book_obj.fields.publishDate;
+    //作者
+    var author_id_list = book_obj.fields.authors;
+    var opt = document.getElementById("id_authors").children;
+    for(var i=0; i<opt.length; i++){
+        for(var j=0;j<author_id_list.length;j++){
+            if(opt[i].value == author_id_list[j]){
+                opt[i].selected = true
+            }
+        }
+    }
+
+</script>
+</body>
+</html>
